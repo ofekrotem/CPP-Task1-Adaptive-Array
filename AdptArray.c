@@ -94,7 +94,7 @@ PElement GetAdptArrayAt(PAdptArray arr, int index) {
 int GetAdptArraySize(PAdptArray arr) {
     // Check for null pointer
     if (arr == NULL) {
-        return 0;
+        return -1;
     }
     // Return the size of the array
     return arr->size;
