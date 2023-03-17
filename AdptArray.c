@@ -15,16 +15,15 @@ struct AdptArray_ {
 PAdptArray CreateAdptArray(COPY_FUNC copy_func, DEL_FUNC del_func, PRINT_FUNC print_func) {
     // Allocate memory for a new AdptArray object
     PAdptArray arr = (PAdptArray) malloc(sizeof(struct AdptArray_));
-    if (arr == NULL) {
-        return NULL;
-    }
-    // Initialize fields of the AdptArray object
-    arr->size = 0;
-    arr->copy_func = copy_func;
-    arr->del_func = del_func;
-    arr->print_func = print_func;
-    arr->arr = NULL;
-    return arr;
+    if (arr) {
+        // Initialize fields of the AdptArray object
+        arr->size = 0;
+        arr->copy_func = copy_func;
+        arr->del_func = del_func;
+        arr->print_func = print_func;
+        arr->arr = NULL;
+        return arr;
+    }else{ return NULL; }
 }
 
 // Function to delete an AdptArray object and its contents
@@ -57,16 +56,16 @@ Result SetAdptArrayAt(PAdptArray arr, int index, PElement element) {
         // If the index is outside of the current array size, allocate more memory
         int newSize = index + 1;
         PElement* new_arr = (PElement*) realloc(arr->arr, sizeof(PElement) * newSize);
-        if (new_arr == NULL) {
-            return FAIL;
-        }
-        // Initialize any new elements in the array to NULL
-        for (int i = arr->size; i < newSize; i++) {
-            new_arr[i] = NULL;
-        }
-        // Update the AdptArray object with the new array and size
-        arr->arr = new_arr;
-        arr->size = newSize;
+        if (new_arr) {
+            // Initialize any new elements in the array to NULL
+            for (int i = arr->size; i < newSize; i++) {
+                new_arr[i] = NULL;
+            }
+            // Update the AdptArray object with the new array and size
+            arr->arr = new_arr;
+            arr->size = newSize;
+        } else { return FAIL; }
+        
     }
     // If the element at the index is not NULL, delete it using the del_func function
     if (arr->arr[index] != NULL) {
